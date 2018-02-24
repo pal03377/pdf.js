@@ -217,7 +217,6 @@ class PDFDocumentProperties {
 
   /**
    * @private
-   * No param => gets page size itself
    */
   _parsePageSize(pageSize) {
     if (!pageSize) {
