@@ -158,6 +158,7 @@ function getViewerConfiguration() {
         'producer': document.getElementById('producerField'),
         'version': document.getElementById('versionField'),
         'pageCount': document.getElementById('pageCountField'),
+        'pageSize': document.getElementById('pageSizeField'),
       },
     },
     errorWrapper: {
