@@ -79,9 +79,11 @@ class PDFDocumentProperties {
           contentDispositionFilename || getPDFFileNameFromURL(this.url),
           this._parseFileSize(this.maybeFileSize),
           this._parseDate(info.CreationDate),
-          this._parseDate(info.ModDate)
+          this._parseDate(info.ModDate),
+          this.pdfDocument.getPageSize()
         ]);
-      }).then(([info, metadata, fileName, fileSize, creationDate, modDate]) => {
+      }).then(([info, metadata, fileName, fileSize,
+                creationDate, modDate, pageSize]) => {
         freezeFieldData({
           'fileName': fileName,
           'fileSize': fileSize,
@@ -95,6 +97,7 @@ class PDFDocumentProperties {
           'producer': info.Producer,
           'version': info.PDFFormatVersion,
           'pageCount': this.pdfDocument.numPages,
+          'pageSize': pageSize,
         });
         this._updateUI();
 
