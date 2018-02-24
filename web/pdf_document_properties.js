@@ -80,7 +80,7 @@ class PDFDocumentProperties {
           this._parseFileSize(this.maybeFileSize),
           this._parseDate(info.CreationDate),
           this._parseDate(info.ModDate),
-          this.pdfDocument.getPageSize()
+          this.pdfDocument.getPageSize().then(this._parsePageSize.bind(this)),
         ]);
       }).then(([info, metadata, fileName, fileSize,
                 creationDate, modDate, pageSize]) => {
@@ -213,6 +213,20 @@ class PDFDocumentProperties {
       size_mb: (+(kb / 1024).toPrecision(3)).toLocaleString(),
       size_b: fileSize.toLocaleString(),
     }, '{{size_mb}} MB ({{size_b}} bytes)');
+  }
+
+  /**
+   * @private
+   * No param => gets page size itself
+   */
+  _parsePageSize(pageSize) {
+    if (!pageSize) {
+      return Promise.resolve(undefined);
+    }
+    return this.l10n.get('document_properties_page_size_pt', {
+      width: pageSize[0],
+      height: pageSize[1],
+    }, '{{width}}pt × {{height}}pt');
   }
 
   /**
