@@ -627,6 +627,21 @@ var PDFDocumentProxy = (function PDFDocumentProxyClosure() {
       return this.transport.getMetadata();
     },
     /**
+     * @param {number} pageNumber The page number to get the page size from.
+     * The first page is 1, which is also the default page used.
+     * @return {Promise} A promise that is resolved with an array of the
+     * width and height in the user space units - [width, height].
+     */
+    getPageSize(pageNumber) {
+      pageNumber = pageNumber || 1;
+      return this.getPage(pageNumber).then((page) => {
+        return [
+          page.pageInfo.view[2] - page.pageInfo.view[0], // width
+          page.pageInfo.view[3] - page.pageInfo.view[1]  // height
+        ];
+      });
+    },
+    /**
      * @return {Promise} A promise that is resolved with a TypedArray that has
      * the raw data from the PDF.
      */
