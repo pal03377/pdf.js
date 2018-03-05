@@ -100,7 +100,8 @@ class PDFDocumentProperties {
           'producer': info.Producer,
           'version': info.PDFFormatVersion,
           'pageCount': this.pdfDocument.numPages,
-          'pageSize': pageSize,
+          'pageSizeInch': pageSize[0],
+          'pageSizeMillimeter': pageSize[1],
         });
         this._updateUI();
 
@@ -223,7 +224,7 @@ class PDFDocumentProperties {
    */
   _parsePageSize(pageSizeInches) {
     if (!pageSizeInches) {
-      return Promise.resolve(undefined);
+      return Promise.resolve([undefined, undefined]);
     }
     const sizes_two_units = {
       'width_in': Math.round(pageSizeInches[0] * 100) / 100,
@@ -232,8 +233,12 @@ class PDFDocumentProperties {
       'width_mm': Math.round(pageSizeInches[0] * 25.4 * 10) / 10,
       'height_mm': Math.round(pageSizeInches[1] * 25.4 * 10) / 10,
     };
-    return this.l10n.get('document_properties_page_size_mm_in',
-      sizes_two_units, '{{width_in}}in × {{height_in}}in');
+    return Promise.all([
+      this.l10n.get('document_properties_page_size_in',
+        sizes_two_units, '{{width_in}} in × {{height_in}} in'),
+      this.l10n.get('document_properties_page_size_mm',
+        sizes_two_units, '{{width_mm}} mm × {{height_mm}} mm'),
+    ]);
   }
 
   /**

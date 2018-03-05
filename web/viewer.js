@@ -158,7 +158,9 @@ function getViewerConfiguration() {
         'producer': document.getElementById('producerField'),
         'version': document.getElementById('versionField'),
         'pageCount': document.getElementById('pageCountField'),
-        'pageSize': document.getElementById('pageSizeField'),
+        'pageSizeInch': document.getElementById('pageSizeFieldInch'),
+        'pageSizeMillimeter':
+          document.getElementById('pageSizeFieldMillimeter'),
       },
     },
     errorWrapper: {
