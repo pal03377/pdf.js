@@ -226,11 +226,16 @@ class PDFDocumentProperties {
     if (!pageSizeInches) {
       return Promise.resolve(undefined);
     }
+    const width_in = Math.round(pageSizeInches[0] * 100) / 100;
+    const height_in = Math.round(pageSizeInches[1] * 100) / 100;
+    // 1in = 25.4mm; no need to round to 2 decimals for mm
+    const width_mm = Math.round(pageSizeInches[0] * 25.4 * 10) / 10;
+    const height_mm = Math.round(pageSizeInches[1] * 25.4 * 10) / 10;
     return this.l10n.get('document_properties_page_size_mm_in', {
-      width_in: pageSizeInches[0],
-      height_in: pageSizeInches[1],
-      width_mm: pageSizeInches[0], // TODO
-      height_mm: pageSizeInches[1],
+      width_in: width_in,
+      height_in: height_in,
+      width_mm: width_mm, 
+      height_mm: height_mm,
     }, '{{width_in}}in × {{height_in}}in');
   }
 
