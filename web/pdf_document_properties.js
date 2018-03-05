@@ -227,11 +227,11 @@ class PDFDocumentProperties {
       return Promise.resolve([undefined, undefined]);
     }
     const sizes_two_units = {
-      'width_in': Math.round(pageSizeInches[0] * 100) / 100,
-      'height_in': Math.round(pageSizeInches[1] * 100) / 100,
+      'width_in': Math.round(pageSizeInches.width * 100) / 100,
+      'height_in': Math.round(pageSizeInches.height * 100) / 100,
       // 1in = 25.4mm; no need to round to 2 decimals for mm
-      'width_mm': Math.round(pageSizeInches[0] * 25.4 * 10) / 10,
-      'height_mm': Math.round(pageSizeInches[1] * 25.4 * 10) / 10,
+      'width_mm': Math.round(pageSizeInches.width * 25.4 * 10) / 10,
+      'height_mm': Math.round(pageSizeInches.height * 25.4 * 10) / 10,
     };
     return Promise.all([
       this.l10n.get('document_properties_page_size_in',
