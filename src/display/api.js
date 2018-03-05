@@ -635,9 +635,10 @@ var PDFDocumentProxy = (function PDFDocumentProxyClosure() {
     getPageSize(pageNumber) {
       pageNumber = pageNumber || 1;
       return this.getPage(pageNumber).then((page) => {
+        const [x1, y1, x2, y2] = page.view;
         return [
-          page.pageInfo.view[2] - page.pageInfo.view[0], // width
-          page.pageInfo.view[3] - page.pageInfo.view[1]  // height
+          x2 - x1, // width
+          y2 - y1  // height
         ];
       });
     },
