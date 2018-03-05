@@ -80,7 +80,10 @@ class PDFDocumentProperties {
           this._parseFileSize(this.maybeFileSize),
           this._parseDate(info.CreationDate),
           this._parseDate(info.ModDate),
-          this.pdfDocument.getPageSize().then(this._parsePageSize.bind(this)),
+          this.pdfDocument.getPageSizeInches().then((pageSizeInches) => {
+            return this._parsePageSize(pageSizeInches);
+          }),
+
         ]);
       }).then(([info, metadata, fileName, fileSize,
                 creationDate, modDate, pageSize]) => {
@@ -218,14 +221,19 @@ class PDFDocumentProperties {
   /**
    * @private
    */
-  _parsePageSize(pageSize) {
-    if (!pageSize) {
+  _parsePageSize(pageSizeInches) {
+    if (!pageSizeInches) {
       return Promise.resolve(undefined);
     }
-    return this.l10n.get('document_properties_page_size_pt', {
-      width: pageSize[0],
-      height: pageSize[1],
-    }, '{{width}}pt × {{height}}pt');
+    const sizes_two_units = {
+      'width_in': Math.round(pageSizeInches[0] * 100) / 100,
+      'height_in': Math.round(pageSizeInches[1] * 100) / 100,
+      // 1in = 25.4mm; no need to round to 2 decimals for mm
+      'width_mm': Math.round(pageSizeInches[0] * 25.4 * 10) / 10,
+      'height_mm': Math.round(pageSizeInches[1] * 25.4 * 10) / 10,
+    };
+    return this.l10n.get('document_properties_page_size_mm_in',
+      sizes_two_units, '{{width_in}}in × {{height_in}}in');
   }
 
   /**
