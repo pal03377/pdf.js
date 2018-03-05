@@ -80,7 +80,10 @@ class PDFDocumentProperties {
           this._parseFileSize(this.maybeFileSize),
           this._parseDate(info.CreationDate),
           this._parseDate(info.ModDate),
-          this.pdfDocument.getPageSize().then(this._parsePageSize.bind(this)),
+          this.pdfDocument.getPageSize().then((pageSize) => {
+            return this._parsePageSize(pageSize);
+          }),
+
         ]);
       }).then(([info, metadata, fileName, fileSize,
                 creationDate, modDate, pageSize]) => {
