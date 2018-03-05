@@ -101,7 +101,7 @@ class PDFDocumentProperties {
           'version': info.PDFFormatVersion,
           'pageCount': this.pdfDocument.numPages,
           'pageSizeInch': pageSize[0],
-          'pageSizeMillimeter': pageSize[1],
+          'pageSizeMM': pageSize[1],
         });
         this._updateUI();
 

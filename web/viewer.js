@@ -159,8 +159,7 @@ function getViewerConfiguration() {
         'version': document.getElementById('versionField'),
         'pageCount': document.getElementById('pageCountField'),
         'pageSizeInch': document.getElementById('pageSizeFieldInch'),
-        'pageSizeMillimeter':
-          document.getElementById('pageSizeFieldMillimeter'),
+        'pageSizeMM': document.getElementById('pageSizeFieldMM'),
       },
     },
     errorWrapper: {
