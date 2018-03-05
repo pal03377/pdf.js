@@ -100,8 +100,8 @@ class PDFDocumentProperties {
           'producer': info.Producer,
           'version': info.PDFFormatVersion,
           'pageCount': this.pdfDocument.numPages,
-          'pageSizeInch': pageSize[0],
-          'pageSizeMM': pageSize[1],
+          'pageSizeInch': pageSize.inch,
+          'pageSizeMM': pageSize.mm,
         });
         this._updateUI();
 
@@ -238,7 +238,12 @@ class PDFDocumentProperties {
         sizes_two_units, '{{width_in}} in × {{height_in}} in'),
       this.l10n.get('document_properties_page_size_mm',
         sizes_two_units, '{{width_mm}} mm × {{height_mm}} mm'),
-    ]);
+    ]).then(([parsedPageSizeInches, parsedPageSizeMM]) => {
+      return Promise.resolve({
+        inch: parsedPageSizeInches,
+        mm: parsedPageSizeMM,
+      });
+    });
   }
 
   /**
