@@ -639,7 +639,7 @@ var PDFDocumentProxy = (function PDFDocumentProxyClosure() {
         // convert values from user units to inches
         return {
           width: (x2 - x1) / 72 * page.userUnit,
-          height: (y2 - y1) / 72 * page.userUnit
+          height: (y2 - y1) / 72 * page.userUnit,
         };
       });
     },
