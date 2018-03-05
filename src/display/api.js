@@ -630,15 +630,16 @@ var PDFDocumentProxy = (function PDFDocumentProxyClosure() {
      * @param {number} pageNumber The page number to get the page size from.
      * The first page is 1, which is also the default page used.
      * @return {Promise} A promise that is resolved with an array of the
-     * width and height in the user space units - [width, height].
+     * width and height in inches - [width, height].
      */
-    getPageSize(pageNumber) {
+    getPageSizeInches(pageNumber) {
       pageNumber = pageNumber || 1;
       return this.getPage(pageNumber).then((page) => {
         const [x1, y1, x2, y2] = page.view;
+        // convert values from user units to inches
         return [
-          x2 - x1, // width
-          y2 - y1  // height
+          (x2 - x1) / 72 * page.userUnit, // width
+          (y2 - y1) / 72 * page.userUnit  // height
         ];
       });
     },

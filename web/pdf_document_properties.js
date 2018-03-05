@@ -80,8 +80,8 @@ class PDFDocumentProperties {
           this._parseFileSize(this.maybeFileSize),
           this._parseDate(info.CreationDate),
           this._parseDate(info.ModDate),
-          this.pdfDocument.getPageSize().then((pageSize) => {
-            return this._parsePageSize(pageSize);
+          this.pdfDocument.getPageSizeInches().then((pageSizeInches) => {
+            return this._parsePageSize(pageSizeInches);
           }),
 
         ]);
@@ -221,14 +221,17 @@ class PDFDocumentProperties {
   /**
    * @private
    */
-  _parsePageSize(pageSize) {
-    if (!pageSize) {
+  _parsePageSize(pageSizeInches) {
+    console.log(this.pdfDocument)
+    if (!pageSizeInches) {
       return Promise.resolve(undefined);
     }
-    return this.l10n.get('document_properties_page_size_pt', {
-      width: pageSize[0],
-      height: pageSize[1],
-    }, '{{width}}pt × {{height}}pt');
+    return this.l10n.get('document_properties_page_size_mm_in', {
+      width_in: pageSizeInches[0],
+      height_in: pageSizeInches[1],
+      width_mm: pageSizeInches[0], // TODO
+      height_mm: pageSizeInches[1],
+    }, '{{width_in}}in × {{height_in}}in');
   }
 
   /**
